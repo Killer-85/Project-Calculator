@@ -1,161 +1,92 @@
-let firstNum = "";
-let secondNum = "";
-let operator = null;
-let isSecondNum = false;
+const display = document.getElementById('display');
+const digitBtns = document.querySelectorAll('.digit');
+const operatorBtns = document.querySelectorAll('.operator');
+const clearBtn = document.getElementById('btn-clear');
+const equalBtn = document.getElementById('btn-equal');
 
+let num1 = "";
+let num2 = "";
+let operator = "";
+display.value = '';
+let activeOperator = null;
 
-function add(firstValue, secondValue) {
-  return parseFloat(firstValue) + parseFloat(secondValue);
+function add(num1,num2){
+  return parseFloat(num1) + parseFloat(num2);
 }
 
-function subtract(firstValue, secondValue) {
-  return parseFloat(firstValue) - parseFloat(secondValue);
+function subtract(num1,num2){
+  return parseFloat(num1) - parseFloat(num2);
 }
 
-function multiply(firstValue, secondValue) {
-  return parseFloat(firstValue) * parseFloat(secondValue);
+function multiply(num1,num2){
+  return parseFloat(num1) * parseFloat(num2);
 }
 
-function divide(firstValue, secondValue) {
-  if (secondValue === 0) {
-    return "Error: Cannot divide by zero";
+function divide(num1,num2){
+  if(num2 === 0){
+    return 'Error: Cannot divide with 0!!';
   }
-  return parseFloat(firstValue) / parseFloat(secondValue);
+  return parseFloat(num1) / parseFloat(num2);
 }
-  
 
-function operate(firstNum,secondNum,operator){
+function operate(num1,num2,operator){
   switch(operator){
     case '+':
-      return add(firstNum,secondNum);
+      return add(num1,num2);
     case '-':
-      return subtract(firstNum,secondNum);
+      return subtract(num1,num2);
     case '*':
-      return multiply(firstNum,secondNum);
+      return multiply(num1,num2);
     case '/':
-      return divide(firstNum,secondNum);
+      return divide(num1,num2);
     default:
-      return 'Invalid operator';
-  }
-}
-//Update Display
-function addToDisplay(value){
-  const display = document.getElementById('display');
-  display.value = value;
-}
-
-function handleDigitClick(digit){
-  if(!isSecondNum){
-    firstNum += digit;
-    addToDisplay(firstNum);
-  }
-  else{
-    secondNum += digit;
-    addToDisplay(secondNum);
+      return 'Error: Invalid operation!!'
   }
 }
 
-function handleOperatorClick(op){
-  if(firstNum !== ""){
-    operator = op;
-    isSecondNum = true;
-    addToDisplay(operator);
-  }
-}
-
-function handleEqualsClick(){
-  if(firstNum && secondNum && operator){
-    const answer = operate(firstNum,secondNum,operator);
-    addToDisplay(answer);
-    firstNum = answer.toString();
-    secondNum = "";
-    operator = null;
-    isSecondNum = false;
-  }
-}
-
-function handleClearClick(){
-  firstNum = "";
-  secondNum = "";
-  operator = null;
-  isSecondNum = false;
-  addToDisplay("");
-}
-
-
-
-document.querySelectorAll(".digit").forEach((button) => {
-  button.addEventListener("click",() => handleDigitClick(button.textContent));
+//Handle Digits
+digitBtns.forEach((button) => {
+  button.addEventListener('click',() =>{
+    display.value += button.textContent;
+  });
 });
 
+//Handle Operators
+operatorBtns.forEach((button) => {
+  button.addEventListener('click',() => {
+    if(activeOperator){
+      activeOperator.classList.remove('operator-active');
+    }
+    button.classList.add('operator-active');
+    activeOperator = button;
 
-document.querySelectorAll(".operators").forEach((button) => {
-  button.addEventListener("click",() => handleOperatorClick(button.textContent));
-});
+    num1 = display.value;
+    operator = button.textContent;
+    display.value = '';
+  })
+})
 
-document.getElementById("btn-equal-to").addEventListener("click",handleEqualsClick);
+equalBtn.addEventListener('click',() =>{
+  if(activeOperator){
+    activeOperator.classList.remove('operator-active');
+    activeOperator =null;
+  }
+  num2 = display.value;
+  if(num1 && num2 && operator){
+    let result = operate(num1,num2,operator);
+    display.value = result;
+  }
 
-document.getElementById("btn-clear").addEventListener("click", handleClearClick);
+})
 
+clearBtn.addEventListener('click',() => {
+  let num1 = "";
+  let num2 = "";
+  let operator = "";
+  display.value = '';
+  let activeOperator = null;
+})
 
-// //Handle Digits(0-9)
-// const digits = document.querySelectorAll('.digit');
-
-// digits.forEach(button => {
-//   button.addEventListener('click',() => {
-//     if(!isSecondNum){
-//       firstNum += button.textContent;
-//       addToDisplay(firstNum)
-//       console.log('FirstNum: ' + firstNum);
-//     }
-//     else{
-//       secondNum += button.textContent;
-//       addToDisplay(secondNum)
-//       console.log('Second Num: ' + secondNum)
-//     }
-//   });
-// });
-
-// // Handle operators
-// const myOperators = document.querySelectorAll('.operators');
-// myOperators.forEach(button => {
-//   button.addEventListener('click',() => {
-//     if(firstNum !== ""){
-//       operator = button.textContent;
-//       isSecondNum = true;
-//       addToDisplay(operator)
-//       console.log('Operator: '+ operator)
-//     }
-    
-    
-//   });
-// });
-
-// //Equals to click
-//   const equal = document.getElementById('btn-equal-to');
-
-//   equal.addEventListener('click',() => {
-//     let answer = operate(firstNum,secondNum,operator);
-//     addToDisplay(answer);
-//     firstNum = answer.toString();
-//     secondNum = " ";
-//     operator= null; 
-//     console.log('answer: '+ answer)
-//   })
-
-
-//   //Clear button
-//   const clear = document.getElementById('btn-clear');
-
-//   clear.addEventListener('click',() => {
-    
-//     let firstNum = "";
-//     let secondNum = "";
-//     let operator = null;
-//     let isSecondNum = false;
-//     addToDisplay("");
-//   })
-  
 
 
 

@@ -54,3 +54,7 @@ button{
   width: 196px;
   height: 50px;
 }
+
+.operator-active{
+  background-color: aqua;
+}
