@@ -35,14 +35,26 @@ div input{
 
 
 #btn-clear{
-  width: 196px;
+  width: 122px;
   height: 50px;
-  margin-right: 16px;
   background-color: #F93827;
 }
 
 #btn-clear:active{
   opacity: 0.6;
+}
+
+img{
+  width: 25px;
+}
+
+#btn-backspace{
+  margin: 0 auto;
+  background-color: #16C47F;
+}
+
+#btn-dot{
+  background-color: #16C47F;
 }
 
 #btn-equal{
@@ -67,7 +79,7 @@ button{
 }
 
 #btn-zero{
-  width: 196px;
+  width: 122px;
   height: 50px;
 }
 

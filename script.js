@@ -3,6 +3,8 @@ const digitBtns = document.querySelectorAll('.digit');
 const operatorBtns = document.querySelectorAll('.operator');
 const clearBtn = document.getElementById('btn-clear');
 const equalBtn = document.getElementById('btn-equal');
+const backspaceBtb = document.getElementById('btn-backspace');
+const decimalBtn = document.getElementById('btn-dot');
 
 let num1 = "";
 let num2 = "";
@@ -88,6 +90,20 @@ operatorBtns.forEach((button) => {
     shouldClearDisplay = true;
   });
 });
+
+//Handle Backspace Button
+backspaceBtb.addEventListener('click',() => {
+  if(display.value){
+    display.value = display.value.slice(0,-1);
+  }
+})
+
+//Handle Decimal Button
+decimalBtn.addEventListener('click',() => {
+  if(!display.value.includes('.')){
+    display.value += '.';
+  }
+})
 
 // Handle Equals
 equalBtn.addEventListener("click", () => {
